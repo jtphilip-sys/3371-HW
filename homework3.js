@@ -2,10 +2,11 @@
 Name: Joel Thomas Philip
 Date created: 2025-06-29
 Date last edited: 2025-06-30
-Version: 3.1
-Description: Homework 3: Improved logic, validation, and bug fixes
+Version: 3.0
+Description: Homework 3 - All validation, helpers, and dynamic behaviors
 */
 
+// --- DOMContentLoaded for Date and Salary Range ---
 document.addEventListener("DOMContentLoaded", function() {
     // Dynamic date display
     const todayElem = document.getElementById("today");
@@ -13,7 +14,13 @@ document.addEventListener("DOMContentLoaded", function() {
         const d = new Date();
         todayElem.innerHTML = d.toLocaleDateString();
     }
-    // Live update for range slider
+    // Salary slider dynamic display
+    showSalaryValue();
+    const salary = document.getElementById("salary");
+    if (salary) {
+        salary.addEventListener("input", showSalaryValue);
+    }
+    // Range (if you want to keep it)
     const range = document.getElementById("range");
     const rangeSlider = document.getElementById("range-slider");
     if (range && rangeSlider) {
@@ -24,7 +31,15 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-// ----- Name Validations -----
+// --- Salary Slider Display ---
+function showSalaryValue() {
+    const slider = document.getElementById('salary');
+    if (slider) {
+        document.getElementById('salary-value').textContent = slider.value;
+    }
+}
+
+// --- First Name Validation ---
 function validateFname() {
     const input = document.getElementById("fname");
     const error = document.getElementById("fname-error");
@@ -36,6 +51,7 @@ function validateFname() {
     error.textContent = "";
     return true;
 }
+// --- Middle Initial Validation ---
 function validateMiddleInit() {
     const input = document.getElementById("middleinit");
     const error = document.getElementById("middleinit-error");
@@ -47,6 +63,7 @@ function validateMiddleInit() {
     error.textContent = "";
     return true;
 }
+// --- Last Name Validation ---
 function validateLname() {
     const input = document.getElementById("lname");
     const error = document.getElementById("lname-error");
@@ -59,7 +76,7 @@ function validateLname() {
     return true;
 }
 
-// ----- Date of Birth Validation -----
+// --- Date of Birth Validation ---
 function validateDob() {
     const dobElem = document.getElementById("dob");
     const dobError = document.getElementById("dob-error");
@@ -86,23 +103,28 @@ function validateDob() {
     }
 }
 
-// ----- SSN Validation -----
-function validateSsn(){
+// --- SSN Autoformat & Validation ---
+function formatAndValidateSsn() {
     const ssnElem = document.getElementById("ssn");
     const ssnError = document.getElementById("ssn-error");
-    const ssn = ssnElem.value.trim();
-    const ssnR = /^[0-9]{3}-?[0-9]{2}-?[0-9]{4}$/;
-
-    if (!ssnR.test(ssn)){
+    let ssn = ssnElem.value.replace(/\D/g, '');
+    // Auto-format
+    if (ssn.length > 3 && ssn.length <= 5)
+        ssn = ssn.slice(0,3) + '-' + ssn.slice(3);
+    else if (ssn.length > 5)
+        ssn = ssn.slice(0,3) + '-' + ssn.slice(3,5) + '-' + ssn.slice(5,9);
+    ssnElem.value = ssn;
+    // Validation
+    const ssnR = /^[0-9]{3}-[0-9]{2}-[0-9]{4}$/;
+    if (!ssnR.test(ssn)) {
         ssnError.textContent = "Please enter a valid SSN (e.g. 123-45-6789)";
         return false;
-    } else {
-        ssnError.textContent = "";
-        return true;
     }
+    ssnError.textContent = "";
+    return true;
 }
 
-// ----- Address Validation -----
+// --- Address Line 1 Validation ---
 function validateAddress1() {
     const addressElem = document.getElementById("address1");
     const addressError = document.getElementById("address1-error");
@@ -116,13 +138,53 @@ function validateAddress1() {
     addressError.textContent = "";
     return true;
 }
+// --- Address Line 2 Validation (optional) ---
+function validateAddress2() {
+    const addressElem = document.getElementById("address2");
+    const addressError = document.getElementById("address2-error");
+    const address = addressElem.value.trim();
+    if (address.length === 0) {
+        addressError.textContent = "";
+        return true;
+    }
+    const addressR = /^[a-zA-Z0-9\s,.'-]{2,}$/;
+    if (!addressR.test(address)) {
+        addressError.textContent = "Please enter a valid address";
+        return false;
+    }
+    addressError.textContent = "";
+    return true;
+}
 
-// ----- ZIP Code Validation (US: 5 or 9 digits) -----
-function validateZip(){
+// --- City Validation ---
+function validateCity() {
+    const cityElem = document.getElementById("city");
+    const cityError = document.getElementById("city-error");
+    const city = cityElem.value.trim();
+    if (city.length < 2 || city.length > 30) {
+        cityError.textContent = "City must be 2-30 characters";
+        return false;
+    }
+    cityError.textContent = "";
+    return true;
+}
+// --- State Dropdown Validation ---
+function validateState() {
+    const stateElem = document.getElementById("State");
+    const stateError = document.getElementById("state-error");
+    if (!stateElem.value) {
+        stateError.textContent = "Please select a state";
+        return false;
+    }
+    stateError.textContent = "";
+    return true;
+}
+
+// --- ZIP Code Validation (US: 5 or 9 digits) ---
+function validateZip() {
     const zipInput = document.getElementById("zip");
     const zipError = document.getElementById("zip-error");
     let zip = zipInput.value.replace(/[^\d]/g, "");
-
     if (!zip) {
         zipError.textContent = "Zip code cannot be empty";
         return false;
@@ -131,17 +193,16 @@ function validateZip(){
         zipError.textContent = "Zip code must be 5 or 9 digits";
         return false;
     }
-
     // Format as 5 digits or 5-4
     if (zip.length === 9) {
-        zip = zip.slice(0,5) + "-" + zip.slice(5,9); 
+        zip = zip.slice(0,5) + "-" + zip.slice(5,9);
     }
     zipInput.value = zip;
     zipError.textContent = "";
     return true;
 }
 
-// ----- Email Validation -----
+// --- Email Validation ---
 function validateEmail() {
     const emailInput = document.getElementById("email");
     const emailError = document.getElementById("email-error");
@@ -161,7 +222,7 @@ function validateEmail() {
     return true;
 }
 
-// ----- Phone Number Validation (US: 10 digits) -----
+// --- Phone Number Validation (US: 10 digits) ---
 function validatePhone() {
     const phoneInput = document.getElementById("phone");
     const phoneError = document.getElementById("phone-error");
@@ -181,14 +242,13 @@ function validatePhone() {
     return true;
 }
 
-// ----- User ID Validation -----
+// --- User ID Validation ---
 function validateUid() {
     let uidElem = document.getElementById("uid");
-    let uid = uidElem.value.toLowerCase();
-    uidElem.value = uid;
+    let uid = uidElem.value;
     const uidError = document.getElementById("uid-error");
 
-    if (uid.length === 0) {
+    if (!uid) {
         uidError.textContent = "User ID cannot be empty";
         return false;
     }
@@ -203,8 +263,8 @@ function validateUid() {
     } else if (uid.length < 5) {
         uidError.textContent = "User ID must be at least 5 characters long";
         return false;
-    } else if (uid.length > 30) {
-        uidError.textContent = "User ID cannot exceed 30 characters";
+    } else if (uid.length > 20) {
+        uidError.textContent = "User ID cannot exceed 20 characters";
         return false;
     } else {
         uidError.textContent = "";
@@ -212,7 +272,7 @@ function validateUid() {
     }
 }
 
-// ----- Password Validation -----
+// --- Password Validation ---
 function validatePword() {
     var passwordoutput;
     var passwordElem = document.getElementById("pword");
@@ -229,7 +289,7 @@ function validatePword() {
     if (document.getElementById("msg1"))
         document.getElementById("msg1").innerHTML = passwordoutput;
     // Validate capital letters
-    if(passwordinput.search(/[A-Z]/) < 0)  {  
+    if(passwordinput.search(/[A-Z]/) < 0)  {
         passwordoutput = "Enter at least 1 upper case letter";
         error_flag = 1;
     } else {
@@ -238,7 +298,7 @@ function validatePword() {
     if (document.getElementById("msg2"))
         document.getElementById("msg2").innerHTML = passwordoutput;
     // Validate numbers
-    if(passwordinput.search(/[0-9]/) < 0 ) {   
+    if(passwordinput.search(/[0-9]/) < 0 ) {
         passwordoutput = "Enter at least 1 number";
         error_flag = 1;
     } else {
@@ -247,7 +307,7 @@ function validatePword() {
     if (document.getElementById("msg3"))
         document.getElementById("msg3").innerHTML = passwordoutput;
     // Validate special chars
-    if(passwordinput.search(/[!\@#\$%&*\-_\\.+\(\)]/) < 0 ) {   
+    if(passwordinput.search(/[!\@#\$%&*\-_\\.+\(\)]/) < 0 ) {
         passwordoutput = "Enter at least 1 special character";
         error_flag = 1;
     } else {
@@ -266,22 +326,51 @@ function validatePword() {
         document.getElementById("msg5").innerHTML = passwordoutput;
     return error_flag === 0;
 }
-// Confirm Password Validation
+
+// --- Confirm Password Validation ---
 function confirmPword() {
     const pword1 = document.getElementById("pword").value;
     const pword2 = document.getElementById("cpword").value;
 
     if (pword1 !== pword2) {
         document.getElementById("cpword-error").innerHTML = "Passwords do not match";
+        return false;
     } else {
         document.getElementById("cpword-error").innerHTML = "Passwords match";
+        return true;
     }
 }
 
+// --- Form-wide Validation for Validate Button ---
+function validateForm() {
+    // Call all field validators, if all valid, show submit, else keep hidden
+    let allValid = true;
+    allValid &= validateFname();
+    allValid &= validateMiddleInit();
+    allValid &= validateLname();
+    allValid &= validateDob();
+    allValid &= formatAndValidateSsn();
+    allValid &= validateAddress1();
+    allValid &= validateAddress2();
+    allValid &= validateCity();
+    allValid &= validateState();
+    allValid &= validateZip();
+    allValid &= validateEmail();
+    allValid &= validatePhone();
+    allValid &= validateUid();
+    allValid &= validatePword();
+    allValid &= confirmPword();
+    // Add more as needed for other fields (like checkboxes/radios if required)
+    if (allValid) {
+        document.getElementById('submitBtn').style.display = '';
+        document.getElementById('validateBtn').style.display = 'none';
+    }
+    return allValid;
+}
 
-// ----- Review Button Implementation -----
+// --- Review Button Implementation ---
 function reviewInp() {
-    var formcontent = document.getElementById("signup");  
+    var formcontent = document.getElementById("signup");
     var formoutput  = "<table class='output'><th colspan='2'> Review All Your Information:</th>";
     for (let i = 0; i < formcontent.elements.length; i++){
         let elem = formcontent.elements[i];
@@ -312,7 +401,7 @@ function reviewInp() {
     document.getElementById("showInput").innerHTML = formoutput;
 }
 
-// Helper: Get label text by element id
+// --- Helper: Get label text by element id ---
 function getLabelText(id) {
     if (!id) return null;
     let labels = document.getElementsByTagName("label");
@@ -324,99 +413,7 @@ function getLabelText(id) {
     return null;
 }
 
-// Remove review data
+// --- Remove review data ---
 function removeReview() {
     document.getElementById("showInput").innerHTML = "";
 }
-
-// ==== NEW: Main form validation handler for "Validate" button ====
-function validateForm() {
-    let allValid = true;
-    allValid &= validateFname();
-    allValid &= validateMiddleInit();
-    allValid &= validateLname();
-    allValid &= validateDob();
-    allValid &= validateSsn();
-    allValid &= validateAddress1();
-    allValid &= validateZip();
-    allValid &= validateEmail();
-    allValid &= validatePhone();
-    allValid &= validateUid();
-    allValid &= validatePword();
-
-    // Confirm passwords must match
-    const pword1 = document.getElementById("pword").value;
-    const pword2 = document.getElementById("cpword").value;
-    if (pword1 !== pword2) {
-        document.getElementById("cpword-error").textContent = "Passwords do not match";
-        allValid = false;
-    } else {
-        document.getElementById("cpword-error").textContent = "";
-    }
-
-    // Required: At least one checkbox checked
-    let historyCheckboxes = [
-        document.getElementById("option1"),
-        document.getElementById("option2"),
-        document.getElementById("option3"),
-        document.getElementById("option4"),
-        document.getElementById("option5")
-    ];
-    let anyChecked = historyCheckboxes.some(cb => cb && cb.checked);
-    if (!anyChecked) {
-        alert("Please check at least one medical history box.");
-        allValid = false;
-    }
-
-    // Required: At least one gender radio selected
-    let gChecked = Array.from(document.getElementsByName("pgender")).some(r => r.checked);
-    if (!gChecked) {
-        alert("Please select a gender.");
-        allValid = false;
-    }
-
-    // Required: State dropdown selected
-    let stateElem = document.getElementById("State");
-    if (stateElem && !stateElem.value) {
-        alert("Please select a state.");
-        allValid = false;
-    }
-
-    // Required: At least one insurance radio selected
-    let insurChecked = Array.from(document.getElementsByName("insurance")).some(r => r.checked);
-    if (!insurChecked) {
-        alert("Please select if you have insurance.");
-        allValid = false;
-    }
-
-    // Required: At least one vaccination radio selected
-    let vaccChecked = Array.from(document.getElementsByName("vaccination")).some(r => r.checked);
-    if (!vaccChecked) {
-        alert("Please select your vaccination status.");
-        allValid = false;
-    }
-
-    // Show/hide submit button
-    const submitBtn = document.getElementById("submit");
-    if (allValid) {
-        submitBtn.style.display = "inline-block";
-        submitBtn.focus();
-    } else {
-        submitBtn.style.display = "none";
-    }
-}
-
-// Prevent form submit if submit button is not visible (not validated)
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("signup").onsubmit = function(e) {
-        let submitBtn = document.getElementById("submit");
-        if (submitBtn && submitBtn.style.display === "inline-block") {
-            // allow submit (form will go to thank you page)
-            return true;
-        } else {
-            // block submit if not validated
-            e.preventDefault();
-            return false;
-        }
-    };
-});
