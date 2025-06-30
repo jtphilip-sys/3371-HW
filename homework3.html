@@ -33,7 +33,7 @@ Description: Homework 2:
             </table>
         </header>
         <hr>
-        <form id="signup" action="hw3-thankyou.html">
+        <form id="signup" action="hw3-thankyou.html" onsubmit="return document.getElementById('submit').style.display !== 'none'">
             <center>
                 <div class="format">
                     <table>
@@ -397,9 +397,16 @@ Description: Homework 2:
                             <td colspan="4">
                                 <center>
                                     <input 
+                                    type="button" 
+                                    value="Validate"
+                                    id="validate"
+                                    onclick="validateForm()"
+                                    />
+                                    <input 
                                     type="submit" 
                                     value="Submit"
                                     id="submit"
+                                    style="display:none;"
                                     />
                                     <input 
                                     type="reset" 

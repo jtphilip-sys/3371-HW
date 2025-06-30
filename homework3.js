@@ -273,9 +273,43 @@ function confirmPword() {
 
     if (pword1 !== pword2) {
         document.getElementById("cpword-error").innerHTML = "Passwords do not match";
+        return false;
     } else {
         document.getElementById("cpword-error").innerHTML = "Passwords match";
+        return true;
     }
+}
+
+// ----- Form Validation -----
+function validateForm() {
+    // Call all individual validation functions
+    const validations = [
+        validateFname(),
+        validateMiddleInit(),
+        validateLname(),
+        validateDob(),
+        validateSsn(),
+        validateAddress1(),
+        validateZip(),
+        validateEmail(),
+        validatePhone(),
+        validateUid(),
+        validatePword(),
+        confirmPword()
+    ];
+    
+    // Check if all validations passed
+    const allValid = validations.every(result => result === true);
+    
+    // Show or hide the submit button based on validation results
+    const submitButton = document.getElementById("submit");
+    if (allValid) {
+        submitButton.style.display = "inline";
+    } else {
+        submitButton.style.display = "none";
+    }
+    
+    return allValid;
 }
 
 
