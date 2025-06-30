@@ -1,9 +1,9 @@
 /*
 Name: Joel Thomas Philip
-Date created: 2025-06-15
-Date last edited: 2025-06-18
-Version: 2.3
-Description: Homework 2: Improved logic, validation, and bug fixes
+Date created: 2025-06-29
+Date last edited: 2025-06-30
+Version: 3.1
+Description: Homework 3: Improved logic, validation, and bug fixes
 */
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -244,7 +244,7 @@ function validatePword() {
     } else {
         passwordoutput = "Has at least 1 number";
     }
-    if (document.getElementById("ms3"))
+    if (document.getElementById("msg3"))
         document.getElementById("msg3").innerHTML = passwordoutput;
     // Validate special chars
     if(passwordinput.search(/[!\@#\$%&*\-_\\.+\(\)]/) < 0 ) {   
@@ -328,3 +328,95 @@ function getLabelText(id) {
 function removeReview() {
     document.getElementById("showInput").innerHTML = "";
 }
+
+// ==== NEW: Main form validation handler for "Validate" button ====
+function validateForm() {
+    let allValid = true;
+    allValid &= validateFname();
+    allValid &= validateMiddleInit();
+    allValid &= validateLname();
+    allValid &= validateDob();
+    allValid &= validateSsn();
+    allValid &= validateAddress1();
+    allValid &= validateZip();
+    allValid &= validateEmail();
+    allValid &= validatePhone();
+    allValid &= validateUid();
+    allValid &= validatePword();
+
+    // Confirm passwords must match
+    const pword1 = document.getElementById("pword").value;
+    const pword2 = document.getElementById("cpword").value;
+    if (pword1 !== pword2) {
+        document.getElementById("cpword-error").textContent = "Passwords do not match";
+        allValid = false;
+    } else {
+        document.getElementById("cpword-error").textContent = "";
+    }
+
+    // Required: At least one checkbox checked
+    let historyCheckboxes = [
+        document.getElementById("option1"),
+        document.getElementById("option2"),
+        document.getElementById("option3"),
+        document.getElementById("option4"),
+        document.getElementById("option5")
+    ];
+    let anyChecked = historyCheckboxes.some(cb => cb && cb.checked);
+    if (!anyChecked) {
+        alert("Please check at least one medical history box.");
+        allValid = false;
+    }
+
+    // Required: At least one gender radio selected
+    let gChecked = Array.from(document.getElementsByName("pgender")).some(r => r.checked);
+    if (!gChecked) {
+        alert("Please select a gender.");
+        allValid = false;
+    }
+
+    // Required: State dropdown selected
+    let stateElem = document.getElementById("State");
+    if (stateElem && !stateElem.value) {
+        alert("Please select a state.");
+        allValid = false;
+    }
+
+    // Required: At least one insurance radio selected
+    let insurChecked = Array.from(document.getElementsByName("insurance")).some(r => r.checked);
+    if (!insurChecked) {
+        alert("Please select if you have insurance.");
+        allValid = false;
+    }
+
+    // Required: At least one vaccination radio selected
+    let vaccChecked = Array.from(document.getElementsByName("vaccination")).some(r => r.checked);
+    if (!vaccChecked) {
+        alert("Please select your vaccination status.");
+        allValid = false;
+    }
+
+    // Show/hide submit button
+    const submitBtn = document.getElementById("submit");
+    if (allValid) {
+        submitBtn.style.display = "inline-block";
+        submitBtn.focus();
+    } else {
+        submitBtn.style.display = "none";
+    }
+}
+
+// Prevent form submit if submit button is not visible (not validated)
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("signup").onsubmit = function(e) {
+        let submitBtn = document.getElementById("submit");
+        if (submitBtn && submitBtn.style.display === "inline-block") {
+            // allow submit (form will go to thank you page)
+            return true;
+        } else {
+            // block submit if not validated
+            e.preventDefault();
+            return false;
+        }
+    };
+});
