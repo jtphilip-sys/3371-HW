@@ -7,17 +7,20 @@ Version: 3.0
 Description: Homework 3 - Patient Registration with External JavaScript Validation
 -->
 <html lang="en">
+
 <head>
     <link rel="stylesheet" href="homework3.css">
     <title>jpmedical.co</title>
 </head>
+
 <body>
     <header>
         <table width="100%">
             <tr>
                 <td valign="top" align="left" width="20%">
                     <div class="image">
-                        <img align="left" src="JP MEDICAL.CO.jpg" alt="JP Medical Logo" height="80%" width="80%" id="logo"/>
+                        <img align="left" src="JP MEDICAL.CO.jpg" alt="JP Medical Logo" height="80%" width="80%"
+                            id="logo" />
                     </div>
                 </td>
                 <td>
@@ -44,16 +47,17 @@ Description: Homework 3 - Patient Registration with External JavaScript Validati
                         <td>
                             <input type="text" name="fname" id="fname" minlength="1" maxlength="30" required
                                 title="Letters, apostrophes, and dashes only" pattern="[a-zA-Z'-]{1,30}"
-                                oninput="validateFname()" onblur="validateFname()" onfocus="validateFname()" placeholder="Joel"/>
+                                oninput="validateFname()" onblur="validateFname()" onfocus="validateFname()"
+                                placeholder="Joel" />
                             <span class="error" id="fname-error"></span>
                         </td>
                     </tr>
                     <tr>
                         <td><label for="middleinit">Middle Initial:</label></td>
                         <td>
-                            <input type="text" name="middleinit" id="middleinit" maxlength="1"
-                                title="Letters only" pattern="[a-zA-Z]{0,1}" oninput="validateMiddleInit()"
-                                onblur="validateMiddleInit()" onfocus="validateMiddleInit()" placeholder="T"/>
+                            <input type="text" name="middleinit" id="middleinit" maxlength="1" title="Letters only"
+                                pattern="[a-zA-Z]{0,1}" oninput="validateMiddleInit()" onblur="validateMiddleInit()"
+                                onfocus="validateMiddleInit()" placeholder="T" />
                             <span class="error" id="middleinit-error"></span>
                         </td>
                     </tr>
@@ -62,7 +66,8 @@ Description: Homework 3 - Patient Registration with External JavaScript Validati
                         <td>
                             <input type="text" name="lname" id="lname" minlength="1" maxlength="30" required
                                 title="Letters, apostrophes, and dashes only" pattern="[a-zA-Z'-]{1,30}"
-                                oninput="validateLname()" onblur="validateLname()" onfocus="validateLname()" placeholder="Philip"/>
+                                oninput="validateLname()" onblur="validateLname()" onfocus="validateLname()"
+                                placeholder="Philip" />
                             <span class="error" id="lname-error"></span>
                         </td>
                     </tr>
@@ -78,8 +83,8 @@ Description: Homework 3 - Patient Registration with External JavaScript Validati
                     <tr>
                         <td><label for="dob">Date of Birth:</label></td>
                         <td>
-                            <input type="date" id="dob" name="dob" required
-                                oninput="validateDob()" onblur="validateDob()" onfocus="validateDob()"/>
+                            <input type="date" id="dob" name="dob" required oninput="validateDob()"
+                                onblur="validateDob()" onfocus="validateDob()" />
                             <span class="error" id="dob-error"></span>
                         </td>
                     </tr>
@@ -87,8 +92,8 @@ Description: Homework 3 - Patient Registration with External JavaScript Validati
                         <td><label for="ssn">Social Security Number:</label></td>
                         <td>
                             <input type="password" minlength="11" maxlength="11" name="ssn" id="ssn" required
-                                title="Format: XXX-XX-XXXX" placeholder="123-45-6789"
-                                oninput="formatAndValidateSsn()" autocomplete="off"/>
+                                title="Format: XXX-XX-XXXX" placeholder="123-45-6789" oninput="formatAndValidateSsn()"
+                                autocomplete="off" />
                             <span class="error" id="ssn-error"></span>
                         </td>
                     </tr>
@@ -97,7 +102,7 @@ Description: Homework 3 - Patient Registration with External JavaScript Validati
                         <td>
                             <input type="text" name="address1" id="address1" minlength="2" maxlength="30" required
                                 title="Please enter a valid address" placeholder="1446 Elm Street"
-                                oninput="validateAddress1()" onblur="validateAddress1()" onfocus="validateAddress1()"/>
+                                oninput="validateAddress1()" onblur="validateAddress1()" onfocus="validateAddress1()" />
                             <span class="error" id="address1-error"></span>
                         </td>
                     </tr>
@@ -105,15 +110,16 @@ Description: Homework 3 - Patient Registration with External JavaScript Validati
                         <td><label for="address2">Address Line 2:</label></td>
                         <td>
                             <input type="text" name="address2" id="address2" maxlength="30" placeholder="Apt 4B"
-                                oninput="validateAddress2()" onblur="validateAddress2()" onfocus="validateAddress2()"/>
+                                oninput="validateAddress2()" onblur="validateAddress2()" onfocus="validateAddress2()" />
                             <span class="error" id="address2-error"></span>
                         </td>
                     </tr>
                     <tr>
                         <td><label for="city">City:</label></td>
                         <td>
-                            <input type="text" name="city" id="city" maxlength="30" minlength="2" required placeholder="Springfield"
-                                oninput="validateCity()" onblur="validateCity()" onfocus="validateCity()"/>
+                            <input type="text" name="city" id="city" maxlength="30" minlength="2" required
+                                placeholder="Springfield" oninput="validateCity()" onblur="validateCity()"
+                                onfocus="validateCity()" />
                             <span class="error" id="city-error"></span>
                         </td>
                     </tr>
@@ -182,8 +188,8 @@ Description: Homework 3 - Patient Registration with External JavaScript Validati
                         <td>
                             <input type="text" name="zip" id="zip" minlength="5" maxlength="10" required
                                 title="5 digits or 5+4 digits (12345 or 12345-6789)" placeholder="12345 or 12345-6789"
-                                pattern="^\d{5}(-\d{4})?$"
-                                oninput="validateZip()" onblur="validateZip()" onfocus="validateZip()"/>
+                                pattern="^\d{5}(-\d{4})?$" oninput="validateZip()" onblur="validateZip()"
+                                onfocus="validateZip()" />
                             <span class="error" id="zip-error"></span>
                         </td>
                     </tr>
@@ -191,10 +197,9 @@ Description: Homework 3 - Patient Registration with External JavaScript Validati
                         <td><label for="email">Email:</label></td>
                         <td>
                             <input type="email" name="email" id="email" minlength="2" maxlength="40" required
-                                title="Letters, numbers and special characters only"
-                                placeholder="anywho@fmail.com"
-                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,20}"
-                                oninput="validateEmail()" onblur="validateEmail()" onfocus="validateEmail()"/>
+                                title="Letters, numbers and special characters only" placeholder="anywho@fmail.com"
+                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,20}" oninput="validateEmail()"
+                                onblur="validateEmail()" onfocus="validateEmail()" />
                             <span class="error" id="email-error"></span>
                         </td>
                     </tr>
@@ -203,26 +208,32 @@ Description: Homework 3 - Patient Registration with External JavaScript Validati
                         <td>
                             <input type="tel" name="phone" id="phone" maxlength="15" required
                                 title="Numbers and dashes only" placeholder="123-456-7890"
-                                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                                oninput="validatePhone()" onblur="validatePhone()" onfocus="validatePhone()"/>
+                                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" oninput="validatePhone()" onblur="validatePhone()"
+                                onfocus="validatePhone()" />
                             <span class="error" id="phone-error"></span>
                         </td>
                     </tr>
                     <tr>
                         <td><label>Medical History (Check all that apply):</label></td>
                         <td>
-                            <input type="checkbox" id="option1" name="history" value="Chicken Pox"><label for="option1"> Chicken Pox</label>
-                            <input type="checkbox" id="option2" name="history" value="Measles"><label for="option2"> Measles</label>
-                            <input type="checkbox" id="option3" name="history" value="Covid-19"><label for="option3"> Covid-19</label>
-                            <input type="checkbox" id="option4" name="history" value="Small Pox"><label for="option4"> Small Pox</label>
-                            <input type="checkbox" id="option5" name="history" value="Flu"><label for="option5"> Flu</label>
+                            <input type="checkbox" id="option1" name="history" value="Chicken Pox"><label for="option1">
+                                Chicken Pox</label>
+                            <input type="checkbox" id="option2" name="history" value="Measles"><label for="option2">
+                                Measles</label>
+                            <input type="checkbox" id="option3" name="history" value="Covid-19"><label for="option3">
+                                Covid-19</label>
+                            <input type="checkbox" id="option4" name="history" value="Small Pox"><label for="option4">
+                                Small Pox</label>
+                            <input type="checkbox" id="option5" name="history" value="Flu"><label for="option5">
+                                Flu</label>
                             <span class="error" id="history-error"></span>
                         </td>
                     </tr>
                     <tr>
                         <td><label for="notes">Additional Notes:</label></td>
                         <td>
-                            <textarea id="notes" name="notes" rows="4" cols="35" placeholder="Any additional information or medical history you would like to provide..."></textarea>
+                            <textarea id="notes" name="notes" rows="4" cols="35"
+                                placeholder="Any additional information or medical history you would like to provide..."></textarea>
                         </td>
                     </tr>
                     <tr>
@@ -230,49 +241,45 @@ Description: Homework 3 - Patient Registration with External JavaScript Validati
                         <td>
                             <input type="radio" id="own" name="living" value="Own"><label for="own"> Own</label>
                             <input type="radio" id="rent" name="living" value="Rent"><label for="rent"> Rent</label>
-                            <input type="radio" id="other-living" name="living" value="Other"><label for="other-living"> Other</label>
+                            <input type="radio" id="other-living" name="living" value="Other"><label for="other-living">
+                                Other</label>
                             <span class="error" id="living-error"></span>
                         </td>
                     </tr>
                     <tr>
                         <td class="td1">
-                            <label for="range">How do you feel at the time of this visit?<br/>(Rate from 1-10)</label>
+                            <label for="range">How do you feel at the time of this visit?<br />(Rate from 1-10)</label>
                         </td>
-                            <td align="center">
-                             &nbsp;1(worst)&nbsp;
-                             <input
-                                 type="range"
-                                 name="range"
-                                 id="range"
-                                 min="1"
-                                 max="10"
-                                 list="range-options"
-                                 oninput="updateRangeValue()"
-                                 onblur="validateRange()"
-                             />
-                             10(Great!)&nbsp;<br>
-                             <span id="range-value"></span>
-                             <datalist id="range-options">
-                                 <option value="1">1</option>
-                                 <option value="2">2</option>
-                                 <option value="3">3</option>
-                                 <option value="4">4</option>
-                                 <option value="5">5</option>
-                                 <option value="6">6</option>
-                                 <option value="7">7</option>
-                                 <option value="8">8</option>
-                                 <option value="9">9</option>
-                                 <option value="10">10</option>
-                             </datalist>
-                             <span class="error" id="range-error"></span>
-                         </td>
+                        <td align="center">
+                            &nbsp;1(worst)&nbsp;
+                            <input type="range" name="range" id="range" min="1" max="10" list="range-options"
+                                oninput="updateRangeValue()" onblur="validateRange()" />
+                            10(Great!)&nbsp;<br>
+                            <span id="range-value"></span>
+                            <datalist id="range-options">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </datalist>
+                            <span class="error" id="range-error"></span>
+                        </td>
                     </tr>
                     <tr>
                         <td><label>Vaccinated?</label></td>
                         <td>
-                            <input type="radio" id="vaccina1" name="vaccination" value="Yes"><label for="vaccina1"> Yes</label>
-                            <input type="radio" id="vaccina2" name="vaccination" value="No"><label for="vaccina2"> No</label>
-                            <input type="radio" id="vaccina3" name="vaccination" value="Prefer not to say"><label for="vaccina3"> Prefer not to say</label>
+                            <input type="radio" id="vaccina1" name="vaccination" value="Yes"><label for="vaccina1">
+                                Yes</label>
+                            <input type="radio" id="vaccina2" name="vaccination" value="No"><label for="vaccina2">
+                                No</label>
+                            <input type="radio" id="vaccina3" name="vaccination" value="Prefer not to say"><label
+                                for="vaccina3"> Prefer not to say</label>
                             <span class="error" id="vaccination-error"></span>
                         </td>
                     </tr>
@@ -281,8 +288,8 @@ Description: Homework 3 - Patient Registration with External JavaScript Validati
                         <td>
                             <input type="text" name="uid" id="uid" maxlength="20" minlength="5" required
                                 title="5-20 chars, no spaces or special chars, can't start with number"
-                                placeholder="Your user ID"
-                                oninput="validateUid()" onblur="validateUid()" onfocus="validateUid()"/>
+                                placeholder="Your user ID" oninput="validateUid()" onblur="validateUid()"
+                                onfocus="validateUid()" />
                             <span class="error" id="uid-error"></span>
                         </td>
                     </tr>
@@ -292,7 +299,7 @@ Description: Homework 3 - Patient Registration with External JavaScript Validati
                             <input type="password" name="pword" id="pword" minlength="8" maxlength="30" required
                                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                 title="Min 8 chars, at least 1 uppercase, 1 lowercase, 1 digit"
-                                oninput="validatePword()" onblur="validatePword()" onfocus="validatePword()"/>
+                                oninput="validatePword()" onblur="validatePword()" onfocus="validatePword()" />
                             <span class="error" id="pword-error"></span>
                         </td>
                     </tr>
@@ -300,7 +307,7 @@ Description: Homework 3 - Patient Registration with External JavaScript Validati
                         <td><label for="cpword">Confirm Password:</label></td>
                         <td>
                             <input type="password" name="cpword" id="cpword" minlength="8" maxlength="30" required
-                                oninput="confirmPword()" onblur="confirmPword()" onfocus="confirmPword()"/>
+                                oninput="confirmPword()" onblur="confirmPword()" onfocus="confirmPword()" />
                             <span class="error" id="cpword-error"></span>
                         </td>
                     </tr>
@@ -309,18 +316,22 @@ Description: Homework 3 - Patient Registration with External JavaScript Validati
                             <center>
                                 <button type="button" id="validateBtn" onclick="validateForm()">Validate</button>
                                 <button type="submit" id="submitBtn" style="display:none;">Submit</button>
-                                <input type="reset" value="Reset" id="reset"/>
+                                <input type="reset" value="Reset" id="reset" />
                                 <br>
-                                <input type="button" name="review" id="review" value="Review" onclick="reviewInp()"/>
+                                <input type="button" name="review" id="review" value="Review" onclick="reviewInp()" />
                                 <div class="pword-message">
-                                    <span id="msg1"></span> <br/>
-                                    <span id="msg2"></span> <br/>
-                                    <span id="msg3"></span> <br/>
-                                    <span id="msg4"></span> <br/>
-                                    <span id="msg5"></span> <br/>
+                                    <span id="msg1"></span><br />
+                                    <span id="msg2"></span><br />
+                                    <span id="msg3"></span><br />
+                                    <span id="msg4"></span><br />
+                                    <span id="msg5"></span><br />
                                 </div>
                                 <p id="showInput"></p>
                             </center>
+                            <!-- Thank You Iframe (Initially Hidden) -->
+                            <iframe id="thankyouFrame" src="hw3-thankyou.html"
+                                style="width:100%; height:600px; border:none; display:none;">
+                            </iframe>
                         </td>
                     </tr>
                 </table>
@@ -329,8 +340,9 @@ Description: Homework 3 - Patient Registration with External JavaScript Validati
     </form>
     <hr>
     <footer>
-        <p>&#169; <a href="placeholder.link.later" target="_blank" rel="noopener noreferrer">Contact Us!</a> | 2025 | Jpmedical.co </p>
+        <p>&#169; <a href="placeholder.link.later" target="_blank" rel="noopener noreferrer">Contact Us!</a> | 2025 | Jpmedical.co</p>
     </footer>
     <script src="homework3.js"></script>
 </body>
+
 </html>

@@ -427,8 +427,26 @@ function validateForm() {
         return null;
     }
 
-        // --- Remove review data ---
-        function removeReview() {
-            document.getElementById("showInput").innerHTML = "";
-        }
+    // --- Remove review data ---
+    function removeReview() {
+        document.getElementById("showInput").innerHTML = "";
     }
+}
+
+// --- Thank You Iframe Behavior ---
+window.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("signup");
+    const iframe = document.getElementById("thankyouFrame");
+
+    if (form && iframe) {
+        form.addEventListener("submit", function (e) {
+            e.preventDefault(); // Prevent page reload
+
+            // Hide the form and show the iframe
+            form.style.display = "none";
+            iframe.style.display = "block";
+            // Load the thank you page
+            iframe.src = "hw3-thankyou.html";
+        });
+    }
+});
