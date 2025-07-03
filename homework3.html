@@ -2,7 +2,7 @@
 <!--
 Name: Joel Thomas Philip
 Date created: 2025-06-29
-Date last edited: 2025-06-30
+Date last edited: 2025-07-02
 Version: 3.0
 Description: Homework 3 - Patient Registration with External JavaScript Validation
 -->
@@ -235,13 +235,37 @@ Description: Homework 3 - Patient Registration with External JavaScript Validati
                         </td>
                     </tr>
                     <tr>
-                        <td><label>Salary Range:</label></td>
-                        <td>
-                            $<span id="salary-value">60000</span>
-                            <input type="range" id="salary" name="salary" min="20000" max="200000" step="1000"
-                                value="60000" oninput="showSalaryValue()">
-                            <span class="error" id="salary-error"></span>
+                        <td class="td1">
+                            <label for="range">How do you feel at the time of this visit?<br/>(Rate from 1-10)</label>
                         </td>
+                            <td align="center">
+                             &nbsp;1(worst)&nbsp;
+                             <input
+                                 type="range"
+                                 name="range"
+                                 id="range"
+                                 min="1"
+                                 max="10"
+                                 list="range-options"
+                                 oninput="updateRangeValue()"
+                                 onblur="validateRange()"
+                             />
+                             10(Great!)&nbsp;<br>
+                             <span id="range-value"></span>
+                             <datalist id="range-options">
+                                 <option value="1">1</option>
+                                 <option value="2">2</option>
+                                 <option value="3">3</option>
+                                 <option value="4">4</option>
+                                 <option value="5">5</option>
+                                 <option value="6">6</option>
+                                 <option value="7">7</option>
+                                 <option value="8">8</option>
+                                 <option value="9">9</option>
+                                 <option value="10">10</option>
+                             </datalist>
+                             <span class="error" id="range-error"></span>
+                         </td>
                     </tr>
                     <tr>
                         <td><label>Vaccinated?</label></td>

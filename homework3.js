@@ -1,43 +1,55 @@
 /*
 Name: Joel Thomas Philip
 Date created: 2025-06-29
-Date last edited: 2025-06-30
+Date last edited: 2025-07-02
 Version: 3.0
 Description: Homework 3 - All validation, helpers, and dynamic behaviors
 */
 
-// --- DOMContentLoaded for Date and Salary Range ---
-document.addEventListener("DOMContentLoaded", function() {
+// --- DOMContentLoaded for Date and Range Slider ---
+document.addEventListener("DOMContentLoaded", function () {
     // Dynamic date display
     const todayElem = document.getElementById("today");
     if (todayElem) {
         const d = new Date();
         todayElem.innerHTML = d.toLocaleDateString();
     }
-    // Salary slider dynamic display
-    showSalaryValue();
-    const salary = document.getElementById("salary");
-    if (salary) {
-        salary.addEventListener("input", showSalaryValue);
-    }
-    // Range (if you want to keep it)
+    // Range slider dynamic display
     const range = document.getElementById("range");
     const rangeSlider = document.getElementById("range-slider");
     if (range && rangeSlider) {
         rangeSlider.textContent = range.value;
-        range.addEventListener("input", function() {
+        range.addEventListener("input", function () {
             rangeSlider.textContent = range.value;
         });
     }
 });
 
-// --- Salary Slider Display ---
-function showSalaryValue() {
-    const slider = document.getElementById('salary');
-    if (slider) {
-        document.getElementById('salary-value').textContent = slider.value;
+// --- Health Check Display --
+function updateRangeValue() { }
+const rangeInput = document.getElementById("range");
+const valueDisplay = document.getElementById("range-value");
+if (rangeInput && valueDisplay) {
+    valueDisplay.textContent = rangeInput.value;
+}
+function validateRange() {
+    const rangeInput = document.getElementById("range");
+    const errorSpan = document.getElementById("range-error");
+    if (!rangeInput || !errorSpan) return false;
+
+    const value = parseInt(rangeInput.value, 10);
+    if (isNaN(value) || value < 1 || value > 10) {
+        errorSpan.textContent = "Please select a value between 1 and 10.";
+        return false;
+    } else {
+        errorSpan.textContent = "";
+        return true;
     }
 }
+
+// Optional: Initialize value on page load
+window.addEventListener("DOMContentLoaded", updateRangeValue);
+
 
 // --- First Name Validation ---
 function validateFname() {
@@ -110,9 +122,9 @@ function formatAndValidateSsn() {
     let ssn = ssnElem.value.replace(/\D/g, '');
     // Auto-format
     if (ssn.length > 3 && ssn.length <= 5)
-        ssn = ssn.slice(0,3) + '-' + ssn.slice(3);
+        ssn = ssn.slice(0, 3) + '-' + ssn.slice(3);
     else if (ssn.length > 5)
-        ssn = ssn.slice(0,3) + '-' + ssn.slice(3,5) + '-' + ssn.slice(5,9);
+        ssn = ssn.slice(0, 3) + '-' + ssn.slice(3, 5) + '-' + ssn.slice(5, 9);
     ssnElem.value = ssn;
     // Validation
     const ssnR = /^[0-9]{3}-[0-9]{2}-[0-9]{4}$/;
@@ -195,7 +207,7 @@ function validateZip() {
     }
     // Format as 5 digits or 5-4
     if (zip.length === 9) {
-        zip = zip.slice(0,5) + "-" + zip.slice(5,9);
+        zip = zip.slice(0, 5) + "-" + zip.slice(5, 9);
     }
     zipInput.value = zip;
     zipError.textContent = "";
@@ -236,7 +248,7 @@ function validatePhone() {
         phoneError.textContent = "Phone number must be 10 digits";
         return false;
     }
-    phone = phone.slice(0,3) + "-" + phone.slice(3,6) + "-" + phone.slice(6,10);
+    phone = phone.slice(0, 3) + "-" + phone.slice(3, 6) + "-" + phone.slice(6, 10);
     phoneInput.value = phone;
     phoneError.textContent = "";
     return true;
@@ -280,7 +292,7 @@ function validatePword() {
     if (!passwordElem) return false;
     var passwordinput = passwordElem.value;
     // Validate lowercase letters
-    if(passwordinput.search(/[a-z]/) < 0 ) {
+    if (passwordinput.search(/[a-z]/) < 0) {
         passwordoutput = "Enter at least 1 lower case letter";
         error_flag = 1;
     } else {
@@ -289,7 +301,7 @@ function validatePword() {
     if (document.getElementById("msg1"))
         document.getElementById("msg1").innerHTML = passwordoutput;
     // Validate capital letters
-    if(passwordinput.search(/[A-Z]/) < 0)  {
+    if (passwordinput.search(/[A-Z]/) < 0) {
         passwordoutput = "Enter at least 1 upper case letter";
         error_flag = 1;
     } else {
@@ -298,7 +310,7 @@ function validatePword() {
     if (document.getElementById("msg2"))
         document.getElementById("msg2").innerHTML = passwordoutput;
     // Validate numbers
-    if(passwordinput.search(/[0-9]/) < 0 ) {
+    if (passwordinput.search(/[0-9]/) < 0) {
         passwordoutput = "Enter at least 1 number";
         error_flag = 1;
     } else {
@@ -307,7 +319,7 @@ function validatePword() {
     if (document.getElementById("msg3"))
         document.getElementById("msg3").innerHTML = passwordoutput;
     // Validate special chars
-    if(passwordinput.search(/[!\@#\$%&*\-_\\.+\(\)]/) < 0 ) {
+    if (passwordinput.search(/[!\@#\$%&*\-_\\.+\(\)]/) < 0) {
         passwordoutput = "Enter at least 1 special character";
         error_flag = 1;
     } else {
@@ -316,7 +328,7 @@ function validatePword() {
     if (document.getElementById("msg4"))
         document.getElementById("msg4").innerHTML = passwordoutput;
     // Validate length
-    if(passwordinput.length < 8) {
+    if (passwordinput.length < 8) {
         passwordoutput = "Enter a minimum of 8 characters";
         error_flag = 1;
     } else {
@@ -360,60 +372,63 @@ function validateForm() {
     allValid &= validateUid();
     allValid &= validatePword();
     allValid &= confirmPword();
+    allValid &= validateRange();
     // Add more as needed for other fields (like checkboxes/radios if required)
     if (allValid) {
         document.getElementById('submitBtn').style.display = '';
         document.getElementById('validateBtn').style.display = 'none';
+        reviewInp();
     }
-    return allValid;
-}
 
-// --- Review Button Implementation ---
-function reviewInp() {
-    var formcontent = document.getElementById("signup");
-    var formoutput  = "<table class='output'><th colspan='2'> Review All Your Information:</th>";
-    for (let i = 0; i < formcontent.elements.length; i++){
-        let elem = formcontent.elements[i];
-        // Ignore button, submit, reset, fieldset, hidden, etc.
-        if (["button", "submit", "reset", "fieldset", "hidden"].includes(elem.type)) continue;
+    function reviewInp() {
+        var formcontent = document.getElementById("signup");
+        if (!formcontent) return;
+        var formoutput = "<table class='output'><th colspan='2'> Review All Your Information:</th>";
+        for (let i = 0; i < formcontent.elements.length; i++) {
+            let elem = formcontent.elements[i];
+            // Ignore button, submit, reset, fieldset, hidden, etc.
+            if (["button", "submit", "reset", "fieldset", "hidden"].includes(elem.type)) continue;
 
-        let label = getLabelText(elem.id) || elem.name;
+            let label = getLabelText(elem.id) || elem.name;
 
-        switch (elem.type) {
-            case "checkbox":
-                formoutput += `<tr><td align='right'>${label}</td><td>${elem.checked ? "&#x2713;" : "&#10008;"}</td></tr>`;
-                break;
-            case "radio":
-                if (elem.checked)
+            switch (elem.type) {
+                case "checkbox":
+                    formoutput += `<tr><td align='right'>${label}</td><td>${elem.checked ? "&#x2713;" : "&#10008;"}</td></tr>`;
+                    break;
+                case "radio":
+                    if (elem.checked)
+                        formoutput += `<tr><td align='right'>${label}</td><td>${elem.value}</td></tr>`;
+                    break;
+                case "password":
+                    formoutput += `<tr><td align='right'>${label}</td><td>********</td></tr>`;
+                    break;
+                case "range":
                     formoutput += `<tr><td align='right'>${label}</td><td>${elem.value}</td></tr>`;
-                break;
-            case "password":
-                formoutput += `<tr><td align='right'>${label}</td><td>********</td></tr>`;
-                break;
-            case "range":
-                formoutput += `<tr><td align='right'>${label}</td><td>${elem.value}</td></tr>`;
-                break;
-            default:
-                formoutput += `<tr><td align='right'>${label}</td><td>${elem.value}</td></tr>`;
+                    break;
+                default:
+                    formoutput += `<tr><td align='right'>${label}</td><td>${elem.value}</td></tr>`;
+            }
+        }
+        formoutput += "</table>";
+        const showInputElem = document.getElementById("showInput");
+        if (showInputElem) {
+            showInputElem.innerHTML = formoutput;
         }
     }
-    formoutput += "</table>";
-    document.getElementById("showInput").innerHTML = formoutput;
-}
 
-// --- Helper: Get label text by element id ---
-function getLabelText(id) {
-    if (!id) return null;
-    let labels = document.getElementsByTagName("label");
-    for (let label of labels) {
-        if (label.htmlFor === id) {
-            return label.textContent.trim();
+    function getLabelText(id) {
+        if (!id) return null;
+        let labels = document.getElementsByTagName("label");
+        for (let label of labels) {
+            if (label.htmlFor === id) {
+                return label.textContent.trim();
+            }
+        }
+        return null;
+    }
+
+        // --- Remove review data ---
+        function removeReview() {
+            document.getElementById("showInput").innerHTML = "";
         }
     }
-    return null;
-}
-
-// --- Remove review data ---
-function removeReview() {
-    document.getElementById("showInput").innerHTML = "";
-}
